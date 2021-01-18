@@ -4,53 +4,54 @@ import os
 import discord
 from dotenv import load_dotenv
 
-load_dotenv()
-TOKEN = os.getenv("DISCORD_TOKEN")
+class MyClient(discord.Client):
+    async def on_ready(self):
+        print(f"{client.user} has connected to Discord!")
+        
+        if(len(client.guilds) == 0):
+            print("Alone and drunk.")
+            exit()
+        
+        if(len(client.guilds) > 1):
+            print("Where e-girls")
+            exit()
 
-intents = discord.Intents.all()
+        guild = client.guilds[0];
 
-client = discord.Client(intents=intents)
+        owner = guild.owner
 
-murad_id = 605470759682572288;
+        print(f"{guild.name}: {guild.id}")
 
-@client.event
-async def on_ready():
-    print(f"{client.user} has connected to Discord!")
-    
-    if(len(client.guilds) == 0):
-        print("Alone and drunk.")
-        exit()
-    
-    if(len(client.guilds) > 1):
-        print("Where e-girls")
-        exit()
+        print("Members:")
+        for member in guild.members:
+            print(f"    {member.name}: {member.id}")
 
-    guild = client.guilds[0];
+        print("Channels:")
+        for channel in guild.channels:
+            print(f"    {channel.name}: {channel.type}")
 
-    owner = guild.owner
+    async def on_message(self, message):
+        if message.author == client.user:
+            return
 
-    print(f"{guild.name}: {guild.id}")
+        if message.content.startswith('/'): #Add custom prefix
+            args = message.content[len('/'):].split()
+            print(args)
+            await message.channel. trigger_typing()
+            await (await bf.function(args[0]))(message,args[1:]) 
 
-    print("Members:")
-    for member in guild.members:
-        print(f"    {member.name}: {member.id}")
+        # if 
+        #     if message.author.id == murad_id:
+        #         response = "You are a stupid dumbass"
+        #     else:
+        #         response = f"You are {message.author.name}"
+        #     await message.reply(response)
 
-    print("Channels:")
-    for channel in guild.channels:
-        print(f"    {channel.name}: {channel.type}")
+import bot_functions as bf
 
-
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    if message.content == "/whoami":
-        if message.author.id == murad_id:
-            response = "You are a stupid dumbass"
-        else:
-            response = f"You are {message.author.name}"
-        await message.reply(response)
-
-
-client.run(TOKEN)
+if __name__ == '__main__':
+    load_dotenv()
+    TOKEN = os.getenv("DISCORD_TOKEN")
+    client = MyClient(intents=discord.Intents.all())
+    print("Connecting to Discord ...")
+    client.run(TOKEN)
