@@ -16,7 +16,7 @@ async def latex(bot, message, args):
         },
         "latex": tex,
         "resolution": 250,
-        "colour":"ffffff"
+        "color":"ffffff"
     }
     json = str(data).replace("'",'"')
     r = requests.post(url = url, data = json)
