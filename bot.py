@@ -5,22 +5,23 @@ import discord
 from dotenv import load_dotenv
 
 class MyClient(discord.Client):
+    
     async def on_ready(self):
         print(f"{client.user} has connected to Discord!")
-        
-        if(len(client.guilds) == 0):
+
+        if len(client.guilds) == 0:
             print("Alone and drunk.")
             exit()
-        
-        if(len(client.guilds) > 1):
+
+        if len(client.guilds) > 1:
             print("Where e-girls")
             exit()
 
-        guild = client.guilds[0];
+        guild = client.guilds[0]
 
         owner = guild.owner
 
-        print(f"{guild.name}: {guild.id}")
+        print(f"{guild.name}: {guild.id}; owner: {owner}")
 
         print("Members:")
         for member in guild.members:
@@ -37,15 +38,7 @@ class MyClient(discord.Client):
         if message.content.startswith('/'): #Add custom prefix
             args = message.content[len('/'):].split()
             print(args)
-            await message.channel. trigger_typing()
-            await (await bf.function(args[0]))(message,args[1:]) 
-
-        # if 
-        #     if message.author.id == murad_id:
-        #         response = "You are a stupid dumbass"
-        #     else:
-        #         response = f"You are {message.author.name}"
-        #     await message.reply(response)
+            await (await bf.function(args[0]))(self, message, args[1:])
 
 import bot_functions as bf
 
