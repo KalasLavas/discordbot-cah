@@ -1,21 +1,22 @@
-# bot.py
+'''Main bot file'''
 import os
-
+import sys
 import discord
 from dotenv import load_dotenv
 
 class MyClient(discord.Client):
-    
+    '''discord class redefinition'''
     async def on_ready(self):
+        '''executed when connected to discord'''
         print(f"{client.user} has connected to Discord!")
 
         if len(client.guilds) == 0:
             print("Alone and drunk.")
-            exit()
+            sys.exit()
 
         if len(client.guilds) > 1:
             print("Where e-girls")
-            exit()
+            sys.exit()
 
         guild = client.guilds[0]
 
@@ -32,6 +33,7 @@ class MyClient(discord.Client):
             print(f"    {channel.name}: {channel.type}")
 
     async def on_message(self, message):
+        '''executed when new message is received'''
         if message.author == client.user:
             return
 
