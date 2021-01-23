@@ -130,9 +130,9 @@ async def cpick(bot, message, args):
 
     winner = await game.czarvote(newmsg.author.id, int(newmsg.content))
 
-    s=""
+    s = ""
     for j in winner[2]:
-            s+= f"{j}\n"
+            s += f"{j}\n"
 
     embed = discord.Embed(title=f"Təbriklər, {bot.get_user(winner[0]).name}", description="", colour=0xffff00)
     embed.add_field(name=f"{winner[1][0]}",value=f"{s}",inline=False)
@@ -140,26 +140,26 @@ async def cpick(bot, message, args):
     await clist(bot, message, args)
 
     await cinitgame(bot, message, args)
-    
+
 
 async def cinitgame(bot, message, args):
     black = await game.initiateplayervote()
     Bembed = discord.Embed(title=f"{black[0]}", description=f"{black[1]} kart seçmək lazımdır\n/pick 1,6,3\n**Kral {bot.get_user(game.czar).name}-dır**", color=0x000000)
-    await game.mainserver.send(embed=Bembed) 
-    
+    await game.mainserver.send(embed=Bembed)
+
     players = await game.list()
     for player in players:
         if player == game.czar:
             continue
         mycards = ""
         for i,line in enumerate(players[player][1]):
-            mycards = f"{mycards}{i+1}: {line} \n" 
+            mycards = f"{mycards}{i+1}: {line} \n"
         Wembed = discord.Embed(title=f"{bot.get_user(player).name}, sənin kartların", description=mycards, color=0xffffff)
         channel = bot.get_user(player).dm_channel
         if channel is None:
             channel = await bot.get_user(player).create_dm()
-        await channel.send(embed=Bembed) 
-        await channel.send(embed=Wembed) 
+        await channel.send(embed=Bembed)
+        await channel.send(embed=Wembed)
 
 async def cend(bot, message, args):
     global game
@@ -171,7 +171,7 @@ async def cend(bot, message, args):
 async def invalid_func(*args, **kwargs):
     return
 
-func_list={
+func_list = {
     "latex": latex,
     "list": clist,
     "join": cjoin,
