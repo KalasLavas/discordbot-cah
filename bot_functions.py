@@ -1,12 +1,10 @@
 # import requests
 import discord
 #import bot
-import csgomarket
+import csgostash
 
-csgom = csgomarket.CSGOMarket()
-
-async def csgo_market_search(bot, message, args):
-    l = await csgom.search(query=' '.join(args), count=3)
+async def csgo_stash_search(bot, message, args):
+    l = await search(query=' '.join(args), count=3)
     for item in l:
         embed = discord.Embed(title=item["name"], url=item["link"], description=f"**{item['price']}**", color=item["color"])
         embed.set_thumbnail(url=item["thumbnail"])
@@ -18,7 +16,7 @@ async def invalid_func(*args, **kwargs):
     return
 
 func_list = {
-    "market": csgo_market_search,
+    "market": csgo_stash_search,
 }
 
 async def function(key):
